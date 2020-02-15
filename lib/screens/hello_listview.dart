@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_intro/models/dog.dart';
+import 'package:flutter_intro/screens/dog_details_screen.dart';
+import 'package:flutter_intro/utils/nav.dart';
 
 class HelloListView extends StatefulWidget {
   @override
@@ -62,12 +64,15 @@ class _HelloListViewState extends State<HelloListView> {
   }
 
   _item(dog) =>
-      Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          _image(dog.photo),
-          _text(dog.name),
-        ],
+      GestureDetector(
+        onTap: () => push(context, DogDetailsScreen(dog)),
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            _image(dog.photo),
+            _text(dog.name),
+          ],
+        ),
       );
 
   _image(String path) => Image.asset(path, fit: BoxFit.cover);
