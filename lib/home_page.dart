@@ -15,14 +15,21 @@ class HomePage extends StatelessWidget {
           centerTitle: false,
         ),
         body: _body(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("Adicionar");
+          },
+          child: Icon(Icons.add),
+        ),
       );
 
   _body() =>
       Container(
+        padding: EdgeInsets.only(top: 16),
         color: Colors.white,
         child: Builder(builder: (context) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _text(),
               _pageView(),
