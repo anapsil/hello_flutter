@@ -4,23 +4,36 @@ import 'package:flutter_intro/screens/hello_screen2.dart';
 import 'package:flutter_intro/screens/hello_screen3.dart';
 import 'package:flutter_intro/utils/nav.dart';
 import 'package:flutter_intro/widgets/blue_button.dart';
+import 'package:flutter_intro/widgets/drawer_list.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      Scaffold(
-        appBar: AppBar(
-          title: Text("Hello Flutter!!!"),
-          centerTitle: false,
+      DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Hello Flutter!!!"),
+            centerTitle: false,
+            bottom: TabBar(tabs: [
+              Tab(text: "Tab 1",),
+              Tab(text: "Tab 2",),
+            ]),
+          ),
+          body: TabBarView(children: [
+            _body(),
+            _body(),
+          ]),
+          floatingActionButton: _fab(),
+          drawer: DrawerList(),
         ),
-        body: _body(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print("Adicionar");
-          },
-          child: Icon(Icons.add),
-        ),
+      );
+
+  _fab() =>
+      FloatingActionButton(
+        onPressed: () => print("Adicionar"),
+        child: Icon(Icons.add),
       );
 
   _body() =>
