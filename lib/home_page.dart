@@ -4,6 +4,7 @@ import 'package:flutter_intro/screens/hello_screen2.dart';
 import 'package:flutter_intro/screens/hello_screen3.dart';
 import 'package:flutter_intro/utils/nav.dart';
 import 'package:flutter_intro/widgets/blue_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -13,35 +14,37 @@ class HomePage extends StatelessWidget {
           title: Text("Hello Flutter!!!"),
           centerTitle: false,
         ),
-        body: _body(context),
+        body: _body(),
       );
 
-  _body(BuildContext context) =>
+  _body() =>
       Container(
         color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _text(),
-            _pageView(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                BlueButton("ListView", () => _onClickNavigator(context, HelloListView())),
-                BlueButton("Screen 2", () => _onClickNavigator(context, HelloScreen2())),
-                BlueButton("Screen 3", () => _onClickNavigator(context, HelloScreen3()))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                BlueButton("Snack", _onClickSnack),
-                BlueButton("Dialog", _onClickDialog),
-                BlueButton("Toast", _onClickToast),
-              ],
-            ),
-          ],
-        ),
+        child: Builder(builder: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _text(),
+              _pageView(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  BlueButton("ListView", () => _onClickNavigator(context, HelloListView())),
+                  BlueButton("Screen 2", () => _onClickNavigator(context, HelloScreen2())),
+                  BlueButton("Screen 3", () => _onClickNavigator(context, HelloScreen3()))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  BlueButton("Snack", () => _onClickSnack(context)),
+                  BlueButton("Dialog", () => _onClickDialog(context)),
+                  BlueButton("Toast", _onClickToast),
+                ],
+              ),
+            ],
+          );
+        }),
       );
 
   _pageView() =>
@@ -87,9 +90,53 @@ class HomePage extends StatelessWidget {
     print(" >> $s");
   }
 
-  _onClickSnack() {}
+  _onClickSnack(BuildContext context) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text("Hello Flutter"),
+      action: SnackBarAction(
+        label: "OK",
+        onPressed: () => {},
+      ),
+    ));
+  }
 
-  _onClickDialog() {}
+  _onClickDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              title: Text("Flutter"),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancelar"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    print("OK!!!!");
+                  },
+                  child: Text("Ok"),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 
-  _onClickToast() {}
+  _onClickToast() {
+    Fluttertoast.showToast(
+        msg: "Hello Flutter!!!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.black26,
+        textColor: Colors.black,
+        fontSize: 16.0);
+  }
 }
