@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intro/screens/hello_screen1.dart';
+import 'package:flutter_intro/screens/hello_listview.dart';
 import 'package:flutter_intro/screens/hello_screen2.dart';
 import 'package:flutter_intro/screens/hello_screen3.dart';
 import 'package:flutter_intro/utils/nav.dart';
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                BlueButton("ListView", () => _onClickNavigator(context, HelloScreen1())),
+                BlueButton("ListView", () => _onClickNavigator(context, HelloListView())),
                 BlueButton("Screen 2", () => _onClickNavigator(context, HelloScreen2())),
                 BlueButton("Screen 3", () => _onClickNavigator(context, HelloScreen3()))
               ],
